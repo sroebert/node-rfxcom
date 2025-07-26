@@ -8,6 +8,7 @@ class FakeSerialPort extends events.EventEmitter {
         this.bytesWritten = [];
         this.flushed = false;
         this.isOpen = true;
+        this.pipeDestination = undefined;
     }
 
     write(buffer, callback) {
@@ -17,6 +18,10 @@ class FakeSerialPort extends events.EventEmitter {
             callback();
         }
     };
+
+    pipe(destination) {
+        this.pipeDestination = destination;
+    }
 
     flush(callback) {
         this.flushed = true;

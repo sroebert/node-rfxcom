@@ -640,6 +640,14 @@ describe("RfxCom", function() {
                 });
             });
         });
+        it(".open should pipe data from the fake serialport to the parser", function() {
+            const fakeSerialPort = new FakeSerialPort(),
+                device = new rfxcom.RfxCom("/", {
+                    port: fakeSerialPort
+                });
+            device.open();
+            expect(fakeSerialPort.pipeDestination).toBe(device.parser);
+        });
         describe(".bytesToUint48", function() {
             it("should convert a sequence of 6 bytes to a longint", function() {
                 expect(rfxcom.RfxCom.bytesToUint48([0xF1, 0x27, 0xba, 0x67, 0x28, 0x97])).toBe(265152933341335);
